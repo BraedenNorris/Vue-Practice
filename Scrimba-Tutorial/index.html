@@ -9,24 +9,19 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 
         <style>
-* { color: inherit; }
-input { font: inherit; border: unset; background: unset; }
-input:focus { outline: unset; }
-
 :root {
-	font: 1rem/1.175 "BlinkMacSystemFont", -apple-system, "Roboto", sans-seri;
+	font: 1rem/1.175 "BlinkMacSystemFont", -apple-system, "Roboto", sans-serif;
 }
 
 #app {
 	display: flex;
-	flex-direction: column; justify-content: center; align-items: center;
+	justify-content: center; align-items: center;
 	width: 100vw; height: 100vh;
 	font-weight: 900; font-size: 8rem;
 	color: hsl(0, 0%, 100%);
 	background: hsl(240, 100%, 67%);
+	user-select: none;
 }
-
-input { text-align: center; }
 
 img {
 	width: 8rem; height: 8rem;
@@ -37,13 +32,7 @@ img {
     <body>
         
         <div id="app">
-            <input type="text" v-model="message2">
-            <p
-                v-html="
-                    message1.slice(0, 7) +
-                    message2 +
-                    message1.slice(12)
-                "></p>
+            <p v-html="incendio(lumos(wizard))"></p>
         </div>
 
         <script>
@@ -54,11 +43,23 @@ img {
                 return out
             }
 
+            function cast(emoji) {
+                if (!emoji) {
+                    emoji = "¯\\_(ツ)_/¯"
+                }
+                return function (wizard) {
+                    return emoji + wizard + emoji
+                }
+            }
+
             var app = new Vue({
                 el: "#app",
                 data: {
-                    message1: "Hello, World! " + emojify("elephant"),
-                    message2: "Vue"
+                    wizard: emojify("wizard")
+                },
+                methods: {
+                    lumos: cast(emojify("lumos")),
+                    incendio: cast(emojify("incendio"))
                 }
             });
         </script>
